@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sao.mapper.PatientMapper" >
+  <resultMap id="BaseResultMap" type="com.sao.model.Patient" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="cell" property="cell" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="TINYINT" />
+    <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+    <result column="weight" property="weight" jdbcType="DOUBLE" />
+    <result column="allergy" property="allergy" jdbcType="TINYINT" />
+    <result column="allergicHistory" property="allergichistory" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, userId, cell, gender, birthday, weight, allergy, allergicHistory
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_patient
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_patient
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sao.model.Patient" >
+    insert into t_patient (id, userId, cell, 
+      gender, birthday, weight, 
+      allergy, allergicHistory)
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{cell,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=TINYINT}, #{birthday,jdbcType=TIMESTAMP}, #{weight,jdbcType=DOUBLE}, 
+      #{allergy,jdbcType=TINYINT}, #{allergichistory,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sao.model.Patient" >
+    insert into t_patient
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="cell != null" >
+        cell,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="allergy != null" >
+        allergy,
+      </if>
+      <if test="allergichistory != null" >
+        allergicHistory,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="cell != null" >
+        #{cell,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="allergy != null" >
+        #{allergy,jdbcType=TINYINT},
+      </if>
+      <if test="allergichistory != null" >
+        #{allergichistory,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sao.model.Patient" >
+    update t_patient
+    <set >
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="cell != null" >
+        cell = #{cell,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="allergy != null" >
+        allergy = #{allergy,jdbcType=TINYINT},
+      </if>
+      <if test="allergichistory != null" >
+        allergicHistory = #{allergichistory,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sao.model.Patient" >
+    update t_patient
+    set userId = #{userid,jdbcType=INTEGER},
+      cell = #{cell,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=TINYINT},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      weight = #{weight,jdbcType=DOUBLE},
+      allergy = #{allergy,jdbcType=TINYINT},
+      allergicHistory = #{allergichistory,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

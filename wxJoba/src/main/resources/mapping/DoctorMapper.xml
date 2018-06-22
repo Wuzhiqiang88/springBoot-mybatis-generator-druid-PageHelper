@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sao.mapper.DoctorMapper" >
+  <resultMap id="BaseResultMap" type="com.sao.model.Doctor" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="cell" property="cell" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="speciality" property="speciality" jdbcType="VARCHAR" />
+    <result column="department_1" property="department1" jdbcType="VARCHAR" />
+    <result column="evaluate" property="evaluate" jdbcType="REAL" />
+    <result column="department_2" property="department2" jdbcType="VARCHAR" />
+    <result column="hospital" property="hospital" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, userId, cell, title, speciality, department_1, evaluate, department_2, hospital
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_doctor
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_doctor
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sao.model.Doctor" >
+    insert into t_doctor (id, userId, cell, 
+      title, speciality, department_1, 
+      evaluate, department_2, hospital
+      )
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{cell,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{speciality,jdbcType=VARCHAR}, #{department1,jdbcType=VARCHAR}, 
+      #{evaluate,jdbcType=REAL}, #{department2,jdbcType=VARCHAR}, #{hospital,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sao.model.Doctor" >
+    insert into t_doctor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="cell != null" >
+        cell,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="speciality != null" >
+        speciality,
+      </if>
+      <if test="department1 != null" >
+        department_1,
+      </if>
+      <if test="evaluate != null" >
+        evaluate,
+      </if>
+      <if test="department2 != null" >
+        department_2,
+      </if>
+      <if test="hospital != null" >
+        hospital,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="cell != null" >
+        #{cell,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="speciality != null" >
+        #{speciality,jdbcType=VARCHAR},
+      </if>
+      <if test="department1 != null" >
+        #{department1,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluate != null" >
+        #{evaluate,jdbcType=REAL},
+      </if>
+      <if test="department2 != null" >
+        #{department2,jdbcType=VARCHAR},
+      </if>
+      <if test="hospital != null" >
+        #{hospital,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sao.model.Doctor" >
+    update t_doctor
+    <set >
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="cell != null" >
+        cell = #{cell,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="speciality != null" >
+        speciality = #{speciality,jdbcType=VARCHAR},
+      </if>
+      <if test="department1 != null" >
+        department_1 = #{department1,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluate != null" >
+        evaluate = #{evaluate,jdbcType=REAL},
+      </if>
+      <if test="department2 != null" >
+        department_2 = #{department2,jdbcType=VARCHAR},
+      </if>
+      <if test="hospital != null" >
+        hospital = #{hospital,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sao.model.Doctor" >
+    update t_doctor
+    set userId = #{userid,jdbcType=INTEGER},
+      cell = #{cell,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      speciality = #{speciality,jdbcType=VARCHAR},
+      department_1 = #{department1,jdbcType=VARCHAR},
+      evaluate = #{evaluate,jdbcType=REAL},
+      department_2 = #{department2,jdbcType=VARCHAR},
+      hospital = #{hospital,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

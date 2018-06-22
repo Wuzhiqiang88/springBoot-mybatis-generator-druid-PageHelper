@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sao.mapper.DiseaseMapper" >
+  <resultMap id="BaseResultMap" type="com.sao.model.Disease" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="symptom" property="symptom" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.sao.model.DiseaseWithBLOBs" extends="BaseResultMap" >
+    <result column="introduction_of_disease" property="introductionOfDisease" jdbcType="LONGVARCHAR" />
+    <result column="high_incidence_group" property="highIncidenceGroup" jdbcType="LONGVARCHAR" />
+    <result column="contagion" property="contagion" jdbcType="LONGVARCHAR" />
+    <result column="state" property="state" jdbcType="LONGVARCHAR" />
+    <result column="inspect" property="inspect" jdbcType="LONGVARCHAR" />
+    <result column="diagnosis" property="diagnosis" jdbcType="LONGVARCHAR" />
+    <result column="cure" property="cure" jdbcType="LONGVARCHAR" />
+    <result column="nursing" property="nursing" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, symptom
+  </sql>
+  <sql id="Blob_Column_List" >
+    introduction_of_disease, high_incidence_group, contagion, state, inspect, diagnosis, 
+    cure, nursing
+  </sql>
+  <!-- 这个方法是我自己加的 -->
+  <select id="selectAllDisease" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_disease
+    ORDER BY id
+  </select>
+  <select id="selectAllDiseaseByKeyWord" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_disease
+    WHERE symptom LIKE "%"#{keyWord}"%"
+      OR introduction_of_disease LIKE "%"#{keyWord}"%"
+    ORDER BY id
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_disease
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_disease
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sao.model.DiseaseWithBLOBs" >
+    insert into t_disease (id, symptom, introduction_of_disease, 
+      high_incidence_group, contagion, 
+      state, inspect, diagnosis, 
+      cure, nursing)
+    values (#{id,jdbcType=INTEGER}, #{symptom,jdbcType=VARCHAR}, #{introductionOfDisease,jdbcType=LONGVARCHAR}, 
+      #{highIncidenceGroup,jdbcType=LONGVARCHAR}, #{contagion,jdbcType=LONGVARCHAR}, 
+      #{state,jdbcType=LONGVARCHAR}, #{inspect,jdbcType=LONGVARCHAR}, #{diagnosis,jdbcType=LONGVARCHAR}, 
+      #{cure,jdbcType=LONGVARCHAR}, #{nursing,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sao.model.DiseaseWithBLOBs" >
+    insert into t_disease
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="symptom != null" >
+        symptom,
+      </if>
+      <if test="introductionOfDisease != null" >
+        introduction_of_disease,
+      </if>
+      <if test="highIncidenceGroup != null" >
+        high_incidence_group,
+      </if>
+      <if test="contagion != null" >
+        contagion,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="inspect != null" >
+        inspect,
+      </if>
+      <if test="diagnosis != null" >
+        diagnosis,
+      </if>
+      <if test="cure != null" >
+        cure,
+      </if>
+      <if test="nursing != null" >
+        nursing,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="symptom != null" >
+        #{symptom,jdbcType=VARCHAR},
+      </if>
+      <if test="introductionOfDisease != null" >
+        #{introductionOfDisease,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="highIncidenceGroup != null" >
+        #{highIncidenceGroup,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="contagion != null" >
+        #{contagion,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="inspect != null" >
+        #{inspect,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="diagnosis != null" >
+        #{diagnosis,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="cure != null" >
+        #{cure,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="nursing != null" >
+        #{nursing,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sao.model.DiseaseWithBLOBs" >
+    update t_disease
+    <set >
+      <if test="symptom != null" >
+        symptom = #{symptom,jdbcType=VARCHAR},
+      </if>
+      <if test="introductionOfDisease != null" >
+        introduction_of_disease = #{introductionOfDisease,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="highIncidenceGroup != null" >
+        high_incidence_group = #{highIncidenceGroup,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="contagion != null" >
+        contagion = #{contagion,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="inspect != null" >
+        inspect = #{inspect,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="diagnosis != null" >
+        diagnosis = #{diagnosis,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="cure != null" >
+        cure = #{cure,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="nursing != null" >
+        nursing = #{nursing,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.sao.model.DiseaseWithBLOBs" >
+    update t_disease
+    set symptom = #{symptom,jdbcType=VARCHAR},
+      introduction_of_disease = #{introductionOfDisease,jdbcType=LONGVARCHAR},
+      high_incidence_group = #{highIncidenceGroup,jdbcType=LONGVARCHAR},
+      contagion = #{contagion,jdbcType=LONGVARCHAR},
+      state = #{state,jdbcType=LONGVARCHAR},
+      inspect = #{inspect,jdbcType=LONGVARCHAR},
+      diagnosis = #{diagnosis,jdbcType=LONGVARCHAR},
+      cure = #{cure,jdbcType=LONGVARCHAR},
+      nursing = #{nursing,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sao.model.Disease" >
+    update t_disease
+    set symptom = #{symptom,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
